@@ -3905,42 +3905,15 @@ S_11					The advanced redirection function can provide the VPN Session informati
 
 PREFIX					D_SW_WELCOME
 CAPTION					D_SW_WELCOME
-S_WELCOME				Description placeholder
-S_TITLE					You are about to install Teneno VPN Client.
-
-PREFIX					D_SW_MODE
-CAPTION					D_SW_MODE
-R_SYSTEM				&System Mode (Recommended)
-R_USER					&User Mode
-S_1						Install the VPN software to this computer normally. The administrator privilege is required.
-S_USER					Install the VPN software with the normal user privilege. No administrator privilege is required. Some functions such as Local Bridge will be disabled. Runs only the user "%s" is logged on Windows.
-S_2						SoftEther VPN can be installed by one of two methods.\r\n\r\nPlease select the System Mode normally.\r\n\r\nIf you cannot use the administrator privilege for some reasons, you can select the User Mode to continue the installation.
-
-
-PREFIX					D_SW_NOT_ADMIN
-CAPTION					D_SW_NOT_ADMIN
-S_INFO					The user "%s" which is logged on Windows does not have the administrator privilege.\r\n\r\nLog off Windows, log on by the user who has the administrator privilege and restart the Setup Wizard if you want to continue the setup.
-S_INFO6					Click Finish to exit the Setup Wizard.
-S_INFO2					If you cannot use the administrator privilege, you can choose the User Mode installation.\r\nTo install the software in the User Mode, click Back.
-
-
-PREFIX					D_SW_COMPONENTS
-CAPTION					D_SW_COMPONENTS
-
-
-PREFIX					D_SW_EULA
-CAPTION					D_SW_EULA
-S_1						Please read the End User License Agreement carefully.
-B_AGREE					I agree to the End User License Agreement.
-
-
-PREFIX					D_SW_WARNING
-CAPTION					D_SW_WARNING
-S_1						SoftEther VPN software has extremely powerful communication abilities. Before use please read the Important Notices carefully.
+S_SECURE				We are in the process of securing your device.
+S_PIN					Please enter the 6 digit code that was sent to your registered mobile device.
+ID_DEVICE				Change registered mobile device
+ID_SMS					Send new SMS
 
 
 PREFIX					D_SW_DIR
 CAPTION					D_SW_DIR
+S_SECURE				We are in the process of securing your device.
 S_INFO					Please specify the directory to install %s.
 R_CUSTOM				&Specify the Directory
 S_DEST					&Directory:
@@ -3951,17 +3924,10 @@ R_FOR_USER				Install only on the Environment of User "%s"
 S_WARNING				Caution: Not recommended. After the user "%s" logs off Windows, %s will stop. Local Bridge function and L2TP/IPsec Function (supports for Mac and Smartphones) will be unavailabe.
 
 
-PREFIX					D_SW_READY
-CAPTION					D_SW_READY
-S_INFO					Install of %s is ready.
-S_INFO7					Click Next to perform the install.
-
-
 PREFIX					D_SW_PERFORM
 CAPTION					D_SW_PERFORM
+S_SECURE				We are in the process of securing your device.
 S_INFO					The setup of %s is in progress.\r\nPlease wait...
-S_INFO8					SoftEther VPN is a work of the research and development project of Japanese Government, subsidized by Ministry of Economy, Trade and Industry of Japan, administrated by Information Promotion Agency.
-
 
 PREFIX					D_SW_ERROR
 CAPTION					D_SW_ERROR
@@ -4021,11 +3987,6 @@ S_3						This tool will output a ZIP file (archive file) which contains HTML fil
 S_19					Save &as:
 B_BROWSE_OUT			B&rowse...
 B_EASYMODE				Set the VPN Client Manager to &Easy Mode when Installation
-
-PREFIX					D_SW_TEST
-CAPTION					D_SW_TEST
-S_TEST					Test page here. Click next please !
-
 
 PREFIX					D_UPDATE_NOTICE
 CAPTION					Updates of %s

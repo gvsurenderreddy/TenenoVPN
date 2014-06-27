@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="shift_jis"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="Cedar"
 	ProjectGUID="{2928D768-DEC3-40D3-8E51-26E364497C9B}"
 	RootNamespace="Cedar"
@@ -719,6 +719,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Pincheck.c"
+				>
+			</File>
+			<File
 				RelativePath=".\Protocol.c"
 				>
 			</File>
@@ -1318,6 +1322,10 @@
 			</File>
 			<File
 				RelativePath=".\NullLan.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Pincheck.h"
 				>
 			</File>
 			<File

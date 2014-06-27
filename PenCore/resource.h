@@ -723,11 +723,11 @@
 #define C_DELAY                         1285
 #define C_USEMSG                        1285
 #define R_L2TP_OVER_IPSEC               1285
-#define B_AGREE                         1285
 #define R_SHOWCUSTOM                    1285
-#define B_RUN                           1285
-#define B_DELETE_SENSITIVE              1285
 #define R_LOG                           1285
+#define B_DELETE_SENSITIVE              1285
+#define B_RUN                           1285
+#define B_AGREE                         1285
 #define R_DOUBLE                        1286
 #define C_SITE                          1286
 #define C_JITTER                        1286
@@ -852,8 +852,8 @@
 #define E_ID                            1380
 #define E_DDNS_HOST                     1380
 #define E_SAMPLE1                       1380
-#define E_CURRENT                       1380
 #define E_OWNER                         1380
+#define E_CURRENT                       1380
 #define S_15                            1381
 #define S_2                             1381
 #define E_SYSLOG_PORT                   1381
@@ -914,8 +914,8 @@
 #define IDC_COMBO1                      1427
 #define C_BITS                          1427
 #define R_NEVER                         1427
-#define IDC_BUTTON1                     1428
 #define BMP_UT                          1428
+#define IDC_BUTTON1                     1428
 #define S_LICENSE                       1429
 #define IDC_BUTTON2                     1429
 #define S_BETA                          1430
@@ -927,16 +927,16 @@
 #define S_ACCESS_SRC_ALL                1433
 #define IDC_RADIO1                      1434
 #define R_ESTABLISHED                   1434
-#define R_SYSTEM                        1434
 #define R_DEFAULT                       1434
 #define S_ENABLE                        1434
 #define R_2WEEKS                        1434
+#define R_SYSTEM                        1434
 #define IDC_RADIO2                      1435
 #define R_UNESTABLISHED                 1435
-#define R_USER                          1435
 #define R_CUSTOM                        1435
 #define S_DISBLE                        1435
 #define R_PERMANENT                     1435
+#define R_USER                          1435
 #define R_FOR_SYSTEM                    1436
 #define IDC_NETADDRESS1                 1437
 #define R_FOR_USER                      1437
@@ -1025,6 +1025,11 @@
 #define S_VGS3                          1514
 #define S_TSUKUBA                       1515
 #define R_DISABLE_NATT                  1516
+#define IDC_CONTU                       1518
+#define IDC_CONTINUE                    1518
+#define IDC_CANCEL                      1519
+#define IDC_DEVICE                      1520
+#define IDC_SMS                         1521
 #define B_ONLINE                        1655
 #define D_NM_CONNECT                    1998
 #define D_NM_MAIN                       1999
@@ -1199,6 +1204,12 @@
 #define ID_VPNGATE40108                 40108
 #define ID__40109                       40109
 #define CMD_VGS                         40110
+#define S_PIN                           50000
+#define S_SECURE                        50001
+#define ID_CONTINUE                     50010
+#define ID_CANCEL                       50011
+#define ID_DEVICE                       50012
+#define ID_SMS                          50013
 
 // Next default values for new objects
 // 
@@ -1207,7 +1218,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        242
 #define _APS_NEXT_COMMAND_VALUE         40111
-#define _APS_NEXT_CONTROL_VALUE         1517
+#define _APS_NEXT_CONTROL_VALUE         1522
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

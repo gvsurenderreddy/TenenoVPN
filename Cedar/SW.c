@@ -4918,7 +4918,7 @@ UINT SwDir(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam, WIZARD *wizard, WI
 		}
 		else
 		{
-			if (IsChecked(hWnd, R_FOR_SYSTEM))
+			if (!IsChecked(hWnd, R_FOR_SYSTEM))
 			{
 				UniStrCpy(tmp, sizeof(tmp), sw->DefaultInstallDir_System);
 			}
@@ -4928,7 +4928,7 @@ UINT SwDir(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam, WIZARD *wizard, WI
 			}
 		}
 
-		is_system_mode = IsChecked(hWnd, R_FOR_SYSTEM);
+		is_system_mode = !IsChecked(hWnd, R_FOR_SYSTEM);
 
 		if (is_system_mode == false)
 		{
@@ -5714,8 +5714,8 @@ UINT SwWelcomeDlg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam, WIZARD *wiz
 		break;
 
 	case WM_WIZ_SHOW:
-		DlgFont(hWnd, S_WELCOME, 10, false);
-		DlgFont(hWnd, S_TITLE, 11, true);
+		DlgFont(hWnd, S_SECURE, 10, false);
+		DlgFont(hWnd, S_PIN, 11, true);
 		SetWizardButtonEx(wizard_page, true, false, true, false, true);
 
 		sw->DoubleClickBlocker = false;
@@ -5729,20 +5729,6 @@ UINT SwWelcomeDlg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam, WIZARD *wiz
 		break;
 
 	case WM_WIZ_NEXT:
-		if (IsFileExistsW(L"@install_src.dat") == false)
-		{
-			// Vpnsetup.exe is launched from other than the installation source
-			MsgBoxEx(hWnd, MB_ICONSTOP, _UU("SW_NOT_INSTALL_SRC"));
-			break;
-		}
-
-		if (sw->DoubleClickBlocker)
-		{
-			break;
-		}
-
-		sw->DoubleClickBlocker = true;
-
 		if (MsIsAdmin() == false)
 		{
 			if (MsIsVista())
@@ -5778,7 +5764,8 @@ UINT SwWelcomeDlg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam, WIZARD *wiz
 		else
 		{
 			// Skip to the component list screen if the user has Admin privileges
-			return D_SW_DIR;
+			if(PincheckIsValid(hWnd, IDC_EDIT1) == true)
+				return D_SW_DIR;
 		}
 		break;
 
@@ -5789,9 +5776,8 @@ UINT SwWelcomeDlg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam, WIZARD *wiz
 		switch (wParam)
 		{
 		}
-		break;
+	break;
 	}
-
 	return 0;
 }
 
@@ -5863,25 +5849,13 @@ void SwUiMain(SW *sw)
 
 	w->CloseConfirmMsg = _UU("SW_EXIT_CONFIRM");
 
-//	AddWizardPage(w, NewWizardPage(D_SW_TEST, SwTestPage, _UU("SW_TEST_PAGE")));
-	
 	AddWizardPage(w, NewWizardPage(D_SW_WELCOME, SwWelcomeDlg, _UU("SW_WELCOME_TITLE")));
-	AddWizardPage(w, NewWizardPage(D_SW_MODE, SwModeDlg, _UU("SW_MODE_TITLE")));
 	AddWizardPage(w, NewWizardPage(D_SW_NOT_ADMIN, SwNotAdminDlg, _UU("SW_NOT_ADMIN_TITLE")));
-	AddWizardPage(w, NewWizardPage(D_SW_COMPONENTS, SwComponents, _UU("SW_COMPONENTS_TITLE")));
-	//AddWizardPage(w, NewWizardPage(D_SW_EULA, SwEula, _UU("SW_EULA_TITLE")));
-	//AddWizardPage(w, NewWizardPage(D_SW_WARNING, SwWarning, _UU("SW_WARNING_TITLE")));
 	AddWizardPage(w, NewWizardPage(D_SW_DIR, SwDir, _UU("SW_DIR_TITLE")));
-	//AddWizardPage(w, NewWizardPage(D_SW_READY, SwReady, _UU("SW_READY_TITLE")));
 	AddWizardPage(w, NewWizardPage(D_SW_PERFORM, SwPerform, _UU("SW_PERFORM_TITLE")));
 	AddWizardPage(w, NewWizardPage(D_SW_ERROR, SwError, _UU("SW_ERROR_TITLE")));
 	AddWizardPage(w, NewWizardPage(D_SW_FINISH, SwFinish, _UU("SW_FINISH_TITLE")));
 	AddWizardPage(w, NewWizardPage(D_SW_UNINST1, SwUninst1, _UU("SW_UNINST1_TITLE")));
-	//AddWizardPage(w, NewWizardPage(D_SW_LANG1, SwLang1, _UU("SW_LANG1_TITLE")));
-	//AddWizardPage(w, NewWizardPage(D_SW_EASY1, SwEasy1, _UU("SW_EASY1_TITLE")));
-	//AddWizardPage(w, NewWizardPage(D_SW_EASY2, SwEasy2, _UU("SW_EASY2_TITLE")));
-	//AddWizardPage(w, NewWizardPage(D_SW_WEB1, SwWeb1, _UU("SW_WEB1_TITLE")));
-	//AddWizardPage(w, NewWizardPage(D_SW_WEB2, SwWeb2, _UU("SW_WEB2_TITLE")));
 
 	if (MsIsVista())
 	{
@@ -5910,99 +5884,6 @@ void SwUiMain(SW *sw)
 
 		ShowWizard(NULL, w, start_page);
 	}
-	else if (sw->WebMode)
-	{
-		// Web installer creation mode
-		UINT start_page = D_SW_WEB1;
-
-		ShowWizard(NULL, w, start_page);
-	}
-	else if (sw->EasyMode)
-	{
-		// Simple installer creation mode
-		UINT start_page = D_SW_EASY1;
-
-		ShowWizard(NULL, w, start_page);
-	}
-	else if (sw->LanguageMode)
-	{
-		// Language setting mode
-		UINT start_page = D_SW_LANG1;
-
-		w->CloseConfirmMsg = NULL;
-
-		if (sw->IsReExecForUac)
-		{
-			// In the case of this have been executed for UAC
-			if (MsIsAdmin())
-			{
-				// Do the language setting
-				start_page = D_SW_PERFORM;
-			}
-			else
-			{
-				// Error screen
-				start_page = D_SW_NOT_ADMIN;
-			}
-		}
-		else
-		{
-			if (sw->LangNow)
-			{
-				// If not via UAC but Lang Now is set
-				start_page = D_SW_PERFORM;
-			}
-		}
-
-		if (sw->SetLangAndReboot && sw->LangNow == false)
-		{
-			// Restart myself immediately by changing the lang.config
-			LIST *o = LoadLangList();
-
-			if (o == NULL)
-			{
-				MsgBox(NULL, MB_ICONSTOP, _UU("SW_LANG_LIST_LOAD_FAILED"));
-			}
-			else
-			{
-				LANGLIST *new_lang = GetLangById(o, sw->LangId);
-				LANGLIST old_lang;
-
-				Zero(&old_lang, sizeof(old_lang));
-				GetCurrentLang(&old_lang);
-
-				if (new_lang == NULL)
-				{
-					MsgBox(NULL, MB_ICONSTOP, _UU("SW_LANG_LIST_LOAD_FAILED"));
-				}
-				else
-				{
-					if (SaveLangConfigCurrentDir(new_lang->Name) == false)
-					{
-						MsgBox(NULL, MB_ICONSTOP, _UU("SW_LANG_SET_FAILED"));
-					}
-					else
-					{
-						if (SwReExecMyself(sw, L"/LANGNOW:true ", false) == false)
-						{
-							SaveLangConfigCurrentDir(old_lang.Name);
-
-							MsgBox(NULL, MB_ICONSTOP, _UU("SW_CHILD_PROCESS_ERROR"));
-
-							sw->ExitCode = SW_EXIT_CODE_INTERNAL_ERROR;
-						}
-					}
-				}
-
-				FreeLangList(o);
-			}
-		}
-		else
-		{
-			// Show the wizard
-			ShowWizard(NULL, w, start_page);
-		}
-	}
 	else
 	{
 		if (MsIsVista() && MsIsAdmin() == false && sw->IsReExecForUac == false)
@@ -6015,25 +5896,14 @@ void SwUiMain(SW *sw)
 				start_page = D_SW_WELCOME;				
 			}
 		}
-		// Installation mode
-
-
-//		if (sw->IsReExecForUac)
-//		{
-			// In the case of this have been executed for UAC
-			if (MsIsAdmin())
-			{
-				// Jump to component list if the user have system administrator privileges
-				start_page = D_SW_WELCOME;
-			}
-			else
-			{
-				// Jump to the setup mode selection screen when fail
-				// to get admin privileges even executed by enabling UAC
-				return;
-			}
-//		}
-
+		if (MsIsAdmin())
+		{
+			start_page = D_SW_WELCOME;
+		}
+		else
+		{
+			return;
+		}
 		ShowWizard(NULL, w, start_page);
 
 		if (sw->Run)
